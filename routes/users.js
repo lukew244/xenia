@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require(__dirname + '/../models/users.js');
 var bcrypt = require('bcryptjs');
-
+var session = require("express-session");
 
 /* GET users listing. */
 router.get('/new', function(req, res, next) {
@@ -16,7 +16,9 @@ router.get('/new', function(req, res, next) {
       var teststring = "test";
       bcrypt.compare(teststring, hash, function(err, res) {
           console.log(res);
-
+          req.session.user = user[0];
+          console.log(req.session);
+          req.session.save();
       });
     });
 
